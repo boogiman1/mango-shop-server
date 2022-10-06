@@ -3,9 +3,21 @@ var cors = require("cors");
 var app = express();
 const models=require('./models')
 const port = 8080;
+const multer = require("multer");
+const upload = multer({ 
+    storage:multer.diskStorage({
+        destination:function(req, file, cb){
+            cb(null,"uploads")
+        },
+        filename:function(req, file, cb){
+            cb(null, file.originalname)
+        }
+    }),    
+})
 
 app.use(express.json());
 app.use(cors());
+app.use("/uploads",express.static("uploads"));
 app.get('/products', (req, res) => {
     // 조회 부분 구현
     // models.Product.findAll() 모든 함수를 찾는다.
@@ -43,6 +55,14 @@ app.get('/products/:id', (req, res) => {
         console.error(error);
         res.send('에러발생')
     })
+})
+
+app.post('/image',upload.single('image'),function(req,res){
+	const file=req.file;
+    console.log(file);
+	res.send({
+		imageUrl:file.path,
+	})
 })
 
 app.post('/products', (req, res) => {
