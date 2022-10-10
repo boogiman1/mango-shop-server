@@ -57,7 +57,7 @@ app.get('/products2', (req, res) => {
     models.Product2.findAll(
         {
             order:[['createdAt','DESC']],
-            attributes:["id2","name2","price2","seller2","description2","imageUrl2","createdAt"]
+            attributes:["id","name2","price2","seller2","description2","imageUrl2","createdAt"]
     }
     )
     .then((result)=>{
@@ -118,22 +118,22 @@ app.post('/products', (req, res) => {
     // res.send({body:body}) 키랑 값이 같으면 생략 가능
     // res.send({body})
 })
-app.post('/products2', (req, res) => {
-    const body2=req.body;
-    const {name2, price2, seller2, description2, imageUrl2}=body2;
-    if(!name2 || !price2 || !seller2 || !description2){
-        res.send("모든 필드를 입력해주세요")
-    }
-    models.Product2.create({name2, price2, seller2, description2, imageUrl2})
-    .then((result)=>{
-        console.log('상품 생성 결과',result);
-        res.send({result})
-    })
-    .catch((error)=>{
-        console.error(error);
-        res.status(400).send('상품 업로드에 문제가 발생 했습니다.')
-    })
-})
+// app.post('/products2', (req, res) => {
+//     const body2=req.body;
+//     const {name2, price2, seller2, description2, imageUrl2}=body2;
+//     if(!name2 || !price2 || !seller2 || !description2){
+//         res.send("모든 필드를 입력해주세요")
+//     }
+//     models.Product2.create({name2, price2, seller2, description2, imageUrl2})
+//     .then((result)=>{
+//         console.log('상품 생성 결과',result);
+//         res.send({result})
+//     })
+//     .catch((error)=>{
+//         console.error(error);
+//         res.status(400).send('상품 업로드에 문제가 발생 했습니다.')
+//     })
+// })
 
 app.post('/login', (req, res) => {
     res.send('로그인이 완료 되었습니다.')
